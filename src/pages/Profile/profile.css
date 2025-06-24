@@ -1,0 +1,11 @@
+.foto-perfil {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  position: absolute; /* CAMBIO CLAVE */
+  bottom: -75px; /* la mitad del alto para que se salga hacia abajo */
+  left: 50%;
+  transform: translateX(-50%);
+  /* opcional: agrega sombra o borde si quieres destacar */
+}
