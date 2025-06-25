@@ -6,7 +6,7 @@ const Post = () => {
         <div className="container">
             <Card className="w-100 mb-3">
                 <Card.Body>
-                    <Card.Title>Nombre del Usuario</Card.Title>
+                    <Card.Title>Nombre del Usuario {/*Nombre Del Usuarios*/}</Card.Title>
                     <Card.Text>
                         Texto del Post
                     </Card.Text>
