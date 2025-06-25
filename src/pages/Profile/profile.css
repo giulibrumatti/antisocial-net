@@ -9,3 +9,6 @@
   transform: translateX(-50%);
   /* opcional: agrega sombra o borde si quieres destacar */
 }
+.portadaUser{
+  height: 50vh;
+}

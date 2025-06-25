@@ -18,7 +18,7 @@ const Profile = () => {
         <div className="container mx-2 border border-dark-subtle rounded-3 p-0 m-0 w-75">
             <h4 className="p-2">NOMBRE DEL USUARIO</h4>
             <div className="p-0 m-0 container-fluid position-relative">
-                <img className="w-100" src={portada} alt="Portada del usuario" />
+                <img className="w-100 portadaUser" src={portada} alt="Portada del usuario" />
                 <img className="foto-perfil border border-dark" src={fotoPerfil} alt="" />
             </div>
             <div className="container-fluid d-flex  align-items-center justify-content-between p-2">
@@ -28,7 +28,7 @@ const Profile = () => {
                 </div>
                 <Button className="rounded-pill mx-5" variant="dark">Editar Perfil</Button>
             </div>
-            <div className="container d-flex flex-row align-items-start justify-content-between px-3">
+            <div className="container d-flex flex-row align-items-start justify-content-around px-3">
                 <div className="d-flex flex-row align-items-start justify-content-between">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-geo-alt mx-2" viewBox="0 0 16 16">
                         <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10" />
