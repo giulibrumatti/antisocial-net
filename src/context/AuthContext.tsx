@@ -1,26 +1,11 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import axios from "../api/axios";
-
-interface User {
-  nickName: string;
-  email: string;
-  [key: string]: any;
-}
-
-interface SigninData {
-  nickName: string;
-  password: string; // En este caso, el password es el email
-}
-
-interface AuthContextType {
-  user: User | null;
-  isAuth: boolean;
-  errorsContext: string[] | null;
-  signin: (data: SigninData) => Promise<{ success: boolean }>;
-  signout: () => void;
-}
-
+import type {
+  SigninData,
+  AuthContextType,
+  User,
+} from "../types/auth";
 export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const useAuth = (): AuthContextType => {
@@ -68,7 +53,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
         return { success: false };
       }
 
-      // Usuario válido
       setUser(userFound);
       setIsAuth(true);
       localStorage.setItem("user", JSON.stringify(userFound));
@@ -85,6 +69,39 @@ export function AuthProvider({ children }: AuthProviderProps) {
     localStorage.removeItem("user");
   };
 
+  const signup = async (data: {
+    nickName: string;
+    email: string;
+  }): Promise<{ success: boolean }> => {
+    try {
+      const res = await axios.get<User[]>("/users");
+
+      const userExists = res.data.find(
+        (user) =>
+          user.nickName.trim().toLowerCase() ===
+            data.nickName.trim().toLowerCase() ||
+          user.email.trim().toLowerCase() === data.email.trim().toLowerCase()
+      );
+
+      if (userExists) {
+        setErrors(["Ya existe un usuario con ese nombre o email"]);
+        return { success: false };
+      }
+
+      const createRes = await axios.post<User>("/users", data);
+
+      setUser(createRes.data);
+      setIsAuth(true);
+      localStorage.setItem("user", JSON.stringify(createRes.data));
+      return { success: true };
+    } catch (error: any) {
+      setErrors([
+        error.response?.data?.message || "Error al registrar el usuario",
+      ]);
+      return { success: false };
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -93,6 +110,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         errorsContext,
         signin,
         signout,
+        signup,
       }}
     >
       {children}

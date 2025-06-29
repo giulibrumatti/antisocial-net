@@ -17,8 +17,8 @@ const Register = () => {
         </div>
 
         <div className="mb-3">
-          <label className="form-label">Contraseña</label>
-          <input type="password" className="form-control" id="password" />
+          <label className="form-label">Email</label>
+          <input type="email" className="form-control" id="email" />
         </div>
         <Button className="rounded-pill w-100 mt-auto" variant="light">
           Registrar
