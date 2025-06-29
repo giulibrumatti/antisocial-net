@@ -44,7 +44,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       console.log(userFound);
 
       if (!userFound) {
-        setErrors(["Usuario no encontrado"]);
+        setErrors(["Este usuario no está registrado"]);
         return { success: false };
       }
 

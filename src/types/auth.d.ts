@@ -22,3 +22,20 @@ export interface AuthContextType {
   signup: (data: SignupData) => Promise<{ success: boolean }>;
   signout: () => void;
 }
+
+
+export interface ProtectedRouteProps {
+  redirectTo: string;
+  isAllowed: boolean;
+  children?: ReactNode;
+}
+
+export interface RouteItem {
+  name: string;
+  path: string;
+}
+
+export interface RouteItem {
+  name: string;
+  path: string;
+}

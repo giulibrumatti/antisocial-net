@@ -9,7 +9,7 @@ import "./profile.css";
 import Post from "../../components/Post/Post";
 const Profile = () => {
     const navigate = useNavigate();
-    const user = false // se reemplaza con la peticion a useContext para sabver si el usuario esta logueado
+    const user = false 
     useEffect(() => {
         if (user)
             navigate("/login")
