@@ -3,13 +3,6 @@ import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { privateRoutes, publicRoutes } from "./navegation.ts";
 
-const nav = [
-  { name: "Inicio", link: "/" },
-  { name: "Perfil", link: "/profile" },
-  { name: "Login", link: "/login" },
-  { name: "Registrarse", link: "/register" },
-];
-
 const Navbar = () => {
   return (
     <aside
@@ -34,7 +27,7 @@ export default Navbar;
 
 function NavList() {
   const location = useLocation();
-  const { isAuth, signout, user } = useAuth();
+  const { isAuth, signout } = useAuth();
   return (
     <ul className="nav flex-column gap-2">
       {isAuth ? (

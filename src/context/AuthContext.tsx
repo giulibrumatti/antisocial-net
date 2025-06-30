@@ -1,9 +1,9 @@
-import { createContext, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import axios from "../api/axios";
 import type {
-  SigninData,
   AuthContextType,
+  SigninData,
   User,
 } from "../types/auth";
 export const AuthContext = createContext<AuthContextType | null>(null);
@@ -35,7 +35,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const signin = async (data: SigninData): Promise<{ success: boolean }> => {
     try {
-      const res = await axios.get<User[]>("/users"); // ← Trae todos los usuarios
+      const res = await axios.get<User[]>("/users"); 
       console.log(res.data);
       const userFound = res.data.find(
         (user) => user.nickName === data.nickName
@@ -52,7 +52,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setErrors(["Contraseña incorrecta"]);
         return { success: false };
       }
-
+      console.log(userFound)
       setUser(userFound);
       setIsAuth(true);
       localStorage.setItem("user", JSON.stringify(userFound));

@@ -1,6 +1,10 @@
-import type { RouteItem } from "../../types/auth"
+import type { RouteItem } from "../../types/auth";
 
 export const privateRoutes: RouteItem[] = [
+  {
+    name: "Inicio",
+    path: "/home",
+  },
   {
     name: "Mi perfil",
     path: "/profile",
