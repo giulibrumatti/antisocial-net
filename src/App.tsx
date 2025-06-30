@@ -15,36 +15,37 @@ import Register from "./pages/Register";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { useAuth } from "./context/AuthContext";
 
-
 function App() {
   const { isAuth } = useAuth();
   return (
-    <div className="d-flex flex-column min-vh-100">
-      <Navbar />
-      <main className="flex-grow-1 p-4 bg-secondary-subtle">
-        <Routes>
-          <Route path="/login" element={<Login />} />
+    <>
+      <div className="d-flex">
+        <Navbar />
+        <main className="flex-grow-1 p-4 bg-secondary-subtle">
+          <Routes>
+            <Route path="/login" element={<Login />} />
 
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/" element={<Home />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/" element={<Home />} />
 
-          <Route path="/terminos" element={<Terminos />} />
-          <Route path="/privacidad" element={<Privacidad />} />
-          <Route path="/ayuda" element={<Ayuda />} />
-          <Route path="/acerca" element={<Acerca />} />
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRoute redirectTo="/login" isAllowed={isAuth}>
-                <Profile />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="/register" element={<Register />} />
-        </Routes>
-      </main>
+            <Route path="/terminos" element={<Terminos />} />
+            <Route path="/privacidad" element={<Privacidad />} />
+            <Route path="/ayuda" element={<Ayuda />} />
+            <Route path="/acerca" element={<Acerca />} />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute redirectTo="/login" isAllowed={isAuth}>
+                  <Profile />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/register" element={<Register />} />
+          </Routes>
+        </main>
+      </div>
       <Footer />
-    </div>
+    </>
   );
 }
 
