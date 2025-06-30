@@ -6,9 +6,12 @@ import portada from "../../assets/portada.jpg";
 import Post from "../../components/Post/Post";
 import { useAuth } from "../../context/AuthContext";
 import "./profile.css";
+import { usePost } from "../../context/PostContext";
 
 const Profile = () => {
   const { user } = useAuth();
+  const { posts, loadPosts } = usePost();
+  const userPosts = posts.filter((post) => post.id === user?.id);
   const date = new Date(user?.createdAt).toISOString().split("T")[0];
   return (
     <div className="container mx-2 border border-dark-subtle rounded-3 p-0 m-0 w-75">
@@ -65,12 +68,15 @@ const Profile = () => {
       </div>
       <Tabs defaultActiveKey="Post" id="uncontrolled-tab" className="mb-3" fill>
         <Tab eventKey="Post" title="Post">
-          <Post></Post>
-          <Post></Post>
+          {userPosts.length > 0 ? (
+            userPosts.map((post) => <Post key={post.id} post={post} />)
+          ) : (
+            <p className="text-center text-secondary">No hay publicaciones.</p>
+          )}
         </Tab>
         <Tab eventKey="Respuesta" title="Respuesta">
-          <Post></Post>
-          <Post></Post>
+          {/* Acá podrías filtrar respuestas si tenés ese campo */}
+          <p className="text-center text-secondary">No hay respuestas.</p>
         </Tab>
       </Tabs>
     </div>

@@ -1,7 +1,11 @@
+import type { User } from "./auth";
+
 export interface Post {
   id: number;
   title: string;
   body: string;
+  description: string;
+  User: User
 }
 
 export interface PostContextType {
