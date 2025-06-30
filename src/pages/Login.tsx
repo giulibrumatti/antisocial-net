@@ -22,7 +22,10 @@ const Login = () => {
 
   return (
     <div className="container d-flex justify-content-center mt-5">
-      <form style={{ width: "100%", maxWidth: "400px" }}  onSubmit={handleSubmit}>
+      <form
+        style={{ width: "100%", maxWidth: "400px" }}
+        onSubmit={handleSubmit}
+      >
         <h2 className="text-center mb-4">Iniciar Sesión</h2>
 
         <div className="mb-3">
@@ -33,18 +36,36 @@ const Login = () => {
             name="nickName"
             id="nickName"
             aria-describedby="nickName"
-            required 
+            required
           />
         </div>
 
         <div className="mb-3">
           <label className="form-label">Contraseña</label>
-          <input type="password" className="form-control" id="password" name="password" required />
+          <input
+            type="password"
+            className="form-control"
+            id="password"
+            name="password"
+            required
+          />
         </div>
-        <Button className="rounded-pill w-100 mt-auto" variant="light" type="submit">
+        <Button
+          className="rounded-pill w-100 mt-auto"
+          variant="light"
+          type="submit"
+        >
           Iniciar Sesión
         </Button>
-        {errorsContext && errorsContext.map((err, i) => <p key={i}>{err}</p>)}
+        {errorsContext && (
+          <div className="mt-3 text-danger">
+            {errorsContext.map((err, i) => (
+              <p className="text-danger" key={i}>
+                {err}
+              </p>
+            ))}
+          </div>
+        )}
       </form>
     </div>
   );
