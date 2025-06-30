@@ -2,61 +2,62 @@ import { Button } from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-const Login = () => {
-  const { signin, errorsContext } = useAuth();
+const Register = () => {
+  const { signup, errorsContext } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const form = e.currentTarget as HTMLFormElement;
-    const nickName = (form.elements.namedItem("nickName") as HTMLInputElement)
-      .value;
-    const password = (form.elements.namedItem("password") as HTMLInputElement)
-      .value;
 
-    const res = await signin({ nickName, password });
+    const form = e.currentTarget;
+    const nickName = (form.elements.namedItem("nickName") as HTMLInputElement)
+      ?.value;
+    const email = (form.elements.namedItem("email") as HTMLInputElement)?.value;
+
+    const res = await signup({ nickName, email });
+
     if (res.success) {
       navigate("/profile");
     }
   };
-
   return (
     <div className="container d-flex justify-content-center mt-5">
       <form
-        style={{ width: "100%", maxWidth: "400px" }}
         onSubmit={handleSubmit}
+        style={{ width: "100%", maxWidth: "400px" }}
       >
-        <h2 className="text-center mb-4">Iniciar Sesión</h2>
+        <h2 className="text-center mb-4">Registro de Usuario</h2>
 
         <div className="mb-3">
           <label className="form-label">Nombre de usuario</label>
           <input
             type="text"
             className="form-control"
-            name="nickName"
             id="nickName"
-            aria-describedby="nickName"
+            name="nickName"
             required
           />
         </div>
 
         <div className="mb-3">
-          <label className="form-label">Contraseña</label>
+          <label className="form-label">Email</label>
           <input
-            type="password"
+            type="email"
             className="form-control"
-            id="password"
-            name="password"
+            id="email"
+            name="email"
             required
           />
         </div>
+
         <Button
           className="rounded-pill w-100 mt-auto"
           variant="light"
           type="submit"
         >
-          Iniciar Sesión
+          Registrar
         </Button>
+
         {errorsContext && (
           <div className="mt-3 text-danger">
             {errorsContext.map((err, i) => (
@@ -71,4 +72,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
