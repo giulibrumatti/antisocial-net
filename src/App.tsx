@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile/Profile";
 import { Home } from "./pages/Home";
+import {PostDetails} from "./components/PostDetails";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/" element={<Home />} />
+          <Route path="/post/:id" element={<PostDetails />} />
         </Routes>
       </main>
     </div>
