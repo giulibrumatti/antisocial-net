@@ -1,6 +1,10 @@
+import type { ReactNode } from "react";
+
 export interface User {
+  id?: number; // Agregado id, ya que el backend lo suele generar
   nickName: string;
   email: string;
+  password?: string; // Agregado password para la verificación (idealmente, esto sería un hash en el backend)
   [key: string]: any;
 }
 
@@ -12,6 +16,7 @@ export interface SigninData {
 export interface SignupData {
   nickName: string;
   email: string;
+  password: string; // 👉 Agregado password para el registro
 }
 
 export interface AuthContextType {
@@ -23,16 +28,10 @@ export interface AuthContextType {
   signout: () => void;
 }
 
-
 export interface ProtectedRouteProps {
   redirectTo: string;
   isAllowed: boolean;
   children?: ReactNode;
-}
-
-export interface RouteItem {
-  name: string;
-  path: string;
 }
 
 export interface RouteItem {

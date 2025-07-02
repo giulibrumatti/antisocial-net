@@ -3,7 +3,9 @@ import Post from "../components/Post/Post.tsx"
 import { Banner } from "../components/Banner";
 import { AboutUs } from "../components/AboutUs";
 import { Highlight } from "../components/Highlight";
-import { usePost } from "../context/PostContext.tsx";
+import { usePost } from "../context/PostContextDef";
+
+
 
 export const Home = () => {
   const { posts, loadPosts } = usePost();

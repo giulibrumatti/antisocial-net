@@ -7,7 +7,7 @@ const Ayuda = () => {
       <h5 className="mt-4">Preguntas frecuentes</h5>
       <ul>
         <li><strong>¿Cómo creo una cuenta?</strong> Hacé clic en “Registrarse” en el menú y completá tus datos.</li>
-        <li><strong>Olvidé mi contraseña, ¿qué hago?</strong> En la pantalla de login, hacé clic en “¿Olvidaste tu contraseña?” (próximamente).</li>
+        <li><strong>Olvidé mi contraseña, ¿qué hago?</strong> En la pantalla de login, hacé clic en “¿Olvidaste tu contraseña?”.</li>
         <li><strong>¿Puedo borrar mis publicaciones?</strong> Sí, desde tu perfil podés gestionar todos tus posts.</li>
       </ul>
 

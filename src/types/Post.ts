@@ -1,19 +1,53 @@
-import type { User } from "./auth";
+export interface User {
+  id: number;
+  nickName: string;
+  email?: string;
+  avatar?: string;
+  createdAt?: string;
+}
+
+export interface Comment {
+  id: number;
+  content: string;
+  userId: number;
+  User: {
+    nickName: string;
+    id: number;
+    avatar?: string;
+  };
+  createdAt: string;
+  updatedAt?: string;
+}
 
 export interface Post {
   id: number;
-  title: string;
-  body: string;
   description: string;
-  User: User
+  imageUrl?: string;
+  User: {
+    id: number;
+    nickName: string;
+    avatar?: string;
+  };
+  comments?: Comment[];
+  likes?: number;
+  createdAt: string;
+  updatedAt?: string;
 }
 
-export interface PostContextType {
-  posts: Post[];
-  loadPosts: () => Promise<void>; 
-  deletePost: (id: number) => Promise<void>;
-  createPost: (post: Post) => Promise<Post | undefined>;
-  loadPost: (id: number) => Promise<Post>;
-  updatePost: (id: number, post: Post) => Promise<Post | undefined>;
-  errors: string[];
+// Tipos adicionales para las interacciones
+export interface Like {
+  id: number;
+  userId: number;
+  postId: number;
+  createdAt: string;
+}
+
+export interface PostFormData {
+  description: string;
+  imageUrl?: string;
+}
+
+export interface CommentFormData {
+  content: string;
+  postId: number;
 }
