@@ -1,37 +1,36 @@
-import  { useEffect, useState } from "react";
-import { Feed } from "../components/feed";
+import { useEffect, useState } from "react";
+import Post from "../components/Post/Post.tsx"
 import { Banner } from "../components/Banner";
 import { AboutUs } from "../components/AboutUs";
 import { Highlight } from "../components/Highlight";
-import type { Post} from "../types/Post.ts";
+import { usePost } from "../context/PostContext.tsx";
 
 export const Home = () => {
-  const [posts, setPosts] = useState<Post[]>([]);
+  const { posts, loadPosts } = usePost();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/posts')
-      .then((res) => res.json())
-      .then((data) => {
-        setPosts(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error al cargar los posts", error);
-        setLoading(false);
-      });
+    const fetchData = async () => {
+      await loadPosts();
+      setLoading(false);
+    };
+    fetchData();
   }, []);
 
   return (
-    <main className="container py-4">
+    <div className="container py-4">
       <Banner />
       <Highlight />
       {loading ? (
         <div className="alert alert-info">Cargando publicaciones...</div>
       ) : (
-        <Feed posts={posts} />
+        <div className="row">
+          {posts.map((post) => (
+            <Post key={post.id} post={post} />
+          ))}
+        </div>
       )}
       <AboutUs />
-    </main>
+    </div>
   );
-}
+};

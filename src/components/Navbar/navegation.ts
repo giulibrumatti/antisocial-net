@@ -3,7 +3,7 @@ import type { RouteItem } from "../../types/auth";
 export const privateRoutes: RouteItem[] = [
   {
     name: "Inicio",
-    path: "/home",
+    path: "/",
   },
   {
     name: "Mi perfil",
@@ -14,7 +14,7 @@ export const privateRoutes: RouteItem[] = [
 export const publicRoutes: RouteItem[] = [
   {
     name: "Inicio",
-    path: "/home",
+    path: "/",
   },
   {
     name: "Login",

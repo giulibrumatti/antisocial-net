@@ -6,6 +6,7 @@ import type {
   SigninData,
   User,
 } from "../types/auth";
+
 export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const useAuth = (): AuthContextType => {

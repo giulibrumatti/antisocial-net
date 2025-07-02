@@ -16,18 +16,17 @@ import Register from "./pages/Register";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { useAuth } from "./context/AuthContext";
 
-
 function App() {
   const { isAuth } = useAuth();
   return (
-    <div className="d-flex flex-column min-vh-100">
-      <Navbar />
-      <main className="flex-grow-1 p-4 bg-secondary-subtle">
-        <Routes>
-          <Route path="/login" element={<Login />} />
+    <>
+      <div className="d-flex">
+        <Navbar />
+        <main className="flex-grow-1 p-4 bg-secondary-subtle">
+          <Routes>
+            <Route path="/login" element={<Login />} />
 
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home />} />
 
           <Route path="/post/:id" element={<PostDetails />} />
 
@@ -49,7 +48,7 @@ function App() {
         </Routes>
       </main>
       <Footer />
-    </div>
+    </>
   );
 }
 
