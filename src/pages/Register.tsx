@@ -1,25 +1,28 @@
 import { Button } from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react"; // Importar useState
 
 const Register = () => {
   const { signup, errorsContext } = useAuth();
   const navigate = useNavigate();
 
+  // 👉 Usar estado para los campos del formulario
+  const [nickName, setNickName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState(""); // 👉 Nuevo estado para la contraseña
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const form = e.currentTarget;
-    const nickName = (form.elements.namedItem("nickName") as HTMLInputElement)
-      ?.value;
-    const email = (form.elements.namedItem("email") as HTMLInputElement)?.value;
-
-    const res = await signup({ nickName, email });
+    // 👉 Enviar los datos del estado, incluyendo la contraseña
+    const res = await signup({ nickName, email, password });
 
     if (res.success) {
       navigate("/profile");
     }
   };
+
   return (
     <div className="container d-flex justify-content-center mt-5">
       <form
@@ -36,6 +39,8 @@ const Register = () => {
             id="nickName"
             name="nickName"
             required
+            value={nickName} // 👉 Vincular con el estado
+            onChange={(e) => setNickName(e.target.value)} // 👉 Actualizar estado
           />
         </div>
 
@@ -47,6 +52,22 @@ const Register = () => {
             id="email"
             name="email"
             required
+            value={email} // 👉 Vincular con el estado
+            onChange={(e) => setEmail(e.target.value)} // 👉 Actualizar estado
+          />
+        </div>
+
+        {/* 👉 Nuevo campo para la contraseña */}
+        <div className="mb-3">
+          <label className="form-label">Contraseña</label>
+          <input
+            type="password"
+            className="form-control"
+            id="password"
+            name="password"
+            required
+            value={password} // 👉 Vincular con el estado
+            onChange={(e) => setPassword(e.target.value)} // 👉 Actualizar estado
           />
         </div>
 

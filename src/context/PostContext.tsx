@@ -1,87 +1,143 @@
-import { createContext, useContext, useState } from "react";
-import type { PostContextType, Post } from "../types/Post";
+import { useState } from "react";
 import type { ReactNode } from "react";
-import {
-  getAllPostsRequest,
-  createPostRequest,
-  deletePostRequest,
-  getPostForIdRequest,
-  editPostRequest,
-} from "../api/post.api";
+import type { Post } from "../types/Post";
+import { useAuth } from "./AuthContext";
+import { PostContext } from "./PostContextDef";
+import type { PostContextType } from "./PostContextDef";
 
-import axios from "axios";
 
-export const PostContext = createContext<PostContextType | null>(null);
-
-export const usePost = (): PostContextType => {
-  const context = useContext(PostContext);
-  if (!context) {
-    throw new Error("usePost must be used within a PostProvider");
-  }
-  return context;
-};
-
-interface PostProviderProps {
-  children: ReactNode;
-}
-
-export function PostProvider({ children }: PostProviderProps) {
+export const PostProvider = ({ children }: { children: ReactNode }) => {
+  const { user } = useAuth();
   const [posts, setPosts] = useState<Post[]>([]);
-  const [errors, setErrors] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const loadPosts = async () => {
-    const res = await getAllPostsRequest();
-    setPosts(res.data);
-  };
-
-  const loadPost = async (id: number) => {
-    const res = await getPostForIdRequest(id);
-    return res.data;
-  };
-
-  const createPost = async (post: Post): Promise<Post | undefined> => {
     try {
-      const res = await createPostRequest(post);
-      setPosts([...posts, res.data]);
-      return res.data;
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error) && error.response) {
-        setErrors([error.response.data.message]);
-      }
+      setLoading(true);
+
+      const mockPosts: Post[] = [
+        {
+          id: 1,
+          description: "¡Bienvenidos a AntiSocial Net! Esta es mi primera publicación.",
+          User: {
+            id: 1,
+            nickName: "admin",
+            avatar: undefined,
+          },
+          comments: [],
+          likes: 5,
+          createdAt: new Date().toISOString(),
+        },
+        {
+          id: 2,
+          description: "Probando la funcionalidad de comentarios y likes.",
+          User: {
+            id: 2,
+            nickName: "usuario_test",
+            avatar: undefined,
+          },
+          comments: [
+            {
+              id: 1,
+              content: "¡Excelente funcionalidad!",
+              userId: 1,
+              User: {
+                id: 1,
+                nickName: "admin",
+                avatar: undefined,
+              },
+              createdAt: new Date().toISOString(),
+            },
+          ],
+          likes: 3,
+          createdAt: new Date().toISOString(),
+        },
+      ];
+
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      setPosts(mockPosts);
+    } catch (error) {
+      console.error("Error loading posts:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const updatePost = async (id: number, post: Post) => {
-    try {
-      const res = await editPostRequest(id, post);
-      return res.data;
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error) && error.response) {
-        setErrors([error.response.data.message]);
-      }
-    }
+const addComment = async (postId: number, content: string) => {
+  if (!user) {
+    console.warn("No hay usuario logueado para agregar comentario.");
+    return;
+  }
+
+  const newComment: import("../types/Post").Comment = {
+    id: Date.now(),
+    content,
+    userId: user.id ?? 0,
+    User: {
+      id: user.id ?? 0,
+      nickName: user.nickName,
+      avatar: user.avatar,
+    },
+    createdAt: new Date().toISOString(),
   };
 
-  const deletePost = async (id: number) => {
-    const res = await deletePostRequest(id);
-    if (res.status === 204) {
-      setPosts(posts.filter((post) => post.id !== id));
-    }
+  setPosts((prevPosts: Post[]) =>
+    prevPosts.map((post) => {
+      if (post.id !== postId) return post;
+
+      const updatedPost: Post = {
+        ...post,
+        comments: [...(post.comments ?? []), newComment],
+      };
+
+      return updatedPost;
+    })
+  );
+};
+
+  const deleteComment = async (postId: number, commentId: number) => {
+    setPosts((prevPosts: Post[]) =>
+      prevPosts.map((post) => {
+        if (post.id !== postId) return post;
+
+        return {
+          ...post,
+          comments: (post.comments ?? []).filter(
+            (comment) => comment.id !== commentId
+          ),
+        };
+      })
+    );
+  };
+
+  const editComment = async (postId: number, commentId: number, content: string) => {
+    setPosts((prevPosts: Post[]) =>
+      prevPosts.map((post) => {
+        if (post.id !== postId) return post;
+        return {
+          ...post,
+          comments: (post.comments ?? []).map((comment) =>
+            comment.id === commentId ? { ...comment, content } : comment
+          ),
+        };
+      })
+    );
+  };
+
+  const value: PostContextType = {
+    posts,
+    loading,
+    loadPosts,
+    addComment,
+    editComment,
+    deleteComment,
   };
 
   return (
-    <PostContext.Provider
-      value={{
-        posts,
-        loadPosts,
-        deletePost,
-        createPost,
-        loadPost,
-        errors,
-        updatePost,
-      }}
-    >
+    <PostContext.Provider value={value}>
       {children}
     </PostContext.Provider>
   );
-}
+};
+
+// usePost hook moved to a separate file (usePost.ts)

@@ -4,6 +4,7 @@ import axios from "../api/axios";
 import type {
   AuthContextType,
   SigninData,
+  SignupData,
   User,
 } from "../types/auth";
 
@@ -35,31 +36,35 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }, []);
 
   const signin = async (data: SigninData): Promise<{ success: boolean }> => {
+    setErrors(null); // Limpiar errores previos
     try {
-      const res = await axios.get<User[]>("/users"); 
-      console.log(res.data);
+      // NOTA: Este enfoque de obtener todos los usuarios y verificar la contraseña
+      // en el cliente NO ES SEGURO ni escalable en una aplicación real.
+      // Lo ideal es tener un endpoint de login en el backend que verifique las credenciales.
+      const res = await axios.get<User[]>("/users");
       const userFound = res.data.find(
         (user) => user.nickName === data.nickName
       );
-
-      console.log(userFound);
 
       if (!userFound) {
         setErrors(["Este usuario no está registrado"]);
         return { success: false };
       }
 
-      if (userFound.email !== data.password) {
+      // 👉 CORRECCIÓN: Verificar si la contraseña ingresada es la contraseña por defecto "123456"
+      // Esto asume que la API siempre asigna "123456" como contraseña por defecto
+      // y que no devuelve la contraseña real del usuario en la respuesta de /users.
+      if (data.password !== "123456") {
         setErrors(["Contraseña incorrecta"]);
         return { success: false };
       }
-      console.log(userFound)
+
       setUser(userFound);
       setIsAuth(true);
       localStorage.setItem("user", JSON.stringify(userFound));
       return { success: true };
     } catch (error: any) {
-      setErrors([error.response?.data?.message || "Usuario no encontrado"]);
+      setErrors([error.response?.data?.message || "Error al iniciar sesión"]);
       return { success: false };
     }
   };
@@ -70,11 +75,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
     localStorage.removeItem("user");
   };
 
-  const signup = async (data: {
-    nickName: string;
-    email: string;
-  }): Promise<{ success: boolean }> => {
+  const signup = async (data: SignupData): Promise<{ success: boolean }> => {
+    setErrors(null); // Limpiar errores previos
     try {
+      // NOTA: Similar al login, este enfoque de verificar la existencia de usuario
+      // en el cliente NO ES SEGURO ni escalable.
       const res = await axios.get<User[]>("/users");
 
       const userExists = res.data.find(
@@ -89,6 +94,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         return { success: false };
       }
 
+      // 👉 `data` ahora incluye `nickName`, `email` Y `password`
       const createRes = await axios.post<User>("/users", data);
 
       setUser(createRes.data);
