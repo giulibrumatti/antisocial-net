@@ -10,6 +10,7 @@ import Acerca from "./pages/Acerca";
 import Profile from "./pages/Profile/Profile";
 
 import { Home } from "./pages/Home";
+import {PostDetails} from "./components/PostDetails";
 
 import Register from "./pages/Register";
 import { ProtectedRoute } from "./components/ProtectedRoute";
@@ -27,22 +28,25 @@ function App() {
 
             <Route path="/" element={<Home />} />
 
-            <Route path="/terminos" element={<Terminos />} />
-            <Route path="/privacidad" element={<Privacidad />} />
-            <Route path="/ayuda" element={<Ayuda />} />
-            <Route path="/acerca" element={<Acerca />} />
-            <Route
-              path="/profile"
-              element={
-                <ProtectedRoute redirectTo="/login" isAllowed={isAuth}>
-                  <Profile />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/register" element={<Register />} />
-          </Routes>
-        </main>
-      </div>
+          <Route path="/post/:id" element={<PostDetails />} />
+
+
+          <Route path="/terminos" element={<Terminos />} />
+          <Route path="/privacidad" element={<Privacidad />} />
+          <Route path="/ayuda" element={<Ayuda />} />
+          <Route path="/acerca" element={<Acerca />} />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute redirectTo="/login" isAllowed={isAuth}>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/register" element={<Register />} />
+
+        </Routes>
+      </main>
       <Footer />
     </>
   );
