@@ -9,6 +9,9 @@ import Ayuda from "./pages/Ayuda";
 import Acerca from "./pages/Acerca";
 import Profile from "./pages/Profile/Profile";
 import { Home } from "./pages/Home";
+
+import {PostDetails} from "./components/PostDetails";
+
 import Register from "./pages/Register";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { useAuth } from "./context/AuthContext";
@@ -39,9 +42,12 @@ function App() {
               }
             />
             <Route path="/register" element={<Register />} />
+        <Route path="/post/:id" element={<PostDetails />} />
           </Routes>
         </main>
       </div>
+          
+
       <Footer />
     </PostProvider>
   );
