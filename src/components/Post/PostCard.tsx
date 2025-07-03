@@ -1,45 +1,38 @@
-/*
-// import React from "react";
-import type { Post } from "../types/Post";
 import { Link } from "react-router-dom";
+import type { Post } from "../../types/Post";
 
-export const PostCard = ({ post }: { post: Post }) => (
-  <div className="card mb-3 border-0 border-bottom">
-    <div className="card-body d-flex">
-      <img
-        src={post.avatarUrl}
-        alt={post.username}
-        className="rounded-circle me-3"
-        width={48}
-        height={48}
-      />
-      <div>
-        <div className="d-flex justify-content-between align-items-center">
-          <div>
-            <strong>{post.username}</strong>{" "}
-            <span className="text-muted">{post.handle}</span>
-          </div>
-          <Link to={`/post/${post.id}`} className="btn btn-sm btn-outline-dark">
-            Ver más
-          </Link>
-        </div>
+interface Props {
+  post: Post;
+}
 
-        <p className="mt-2 mb-2">{post.content}</p>
+const PostCard = ({ post }: Props) => {
+  return (
+    <div className="card mb-3 border border-dark-subtle shadow-sm">
+      <div className="card-body">
+        <h5 className="card-title">{post.description}</h5>
 
-        {post.imageUrl && (
-          <img
-            src={post.imageUrl}
-            alt="Contenido del post"
-            className="img-fluid rounded mb-2"
-          />
+        {/* Etiquetas */}
+        {post.tags && post.tags.length > 0 && (
+          <p className="card-text">
+            <strong>Etiquetas:</strong>{" "}
+            {post.tags.map((tag) => tag.name).join(", ")}
+          </p>
         )}
 
-        <div className="text-muted small">
-        
-          <span>🏷️ {post.tags.join(", ")}</span>
-        </div>
+        {/* Comentarios */}
+        {post.comments && (
+          <p className="card-text">
+            💬 {post.comments.length} comentario{post.comments.length !== 1 ? "s" : ""}
+          </p>
+        )}
+
+        {/* Botón Ver más */}
+        <Link to={`/post/${post.id}`} className="btn btn-outline-primary btn-sm">
+          Ver más
+        </Link>
       </div>
     </div>
-  </div>
-);
-*/
+  );
+};
+
+export default PostCard;

@@ -8,26 +8,31 @@ import type {
   User,
 } from "../types/auth";
 
+// Creamos el contexto
 export const AuthContext = createContext<AuthContextType | null>(null);
 
+// Hook personalizado para usar el contexto
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error("useAuth debe usarse dentro de un AuthProvider");
   }
   return context;
 };
 
+// Tipo para las props del Provider
 interface AuthProviderProps {
   children: ReactNode;
 }
 
+// Componente que provee el contexto
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<User | null>(null);
-  const [isAuth, setIsAuth] = useState<boolean>(false);
-  const [errorsContext, setErrors] = useState<string[] | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [user, setUser] = useState<User | null>(null);         // Usuario actual
+  const [isAuth, setIsAuth] = useState<boolean>(false);        // Autenticado
+  const [errorsContext, setErrors] = useState<string[] | null>(null); // Errores
+  const [loading, setLoading] = useState<boolean>(true);       // Cargando app
 
+  // Al iniciar, vemos si hay un user guardado en localStorage
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -37,8 +42,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setLoading(false);
   }, []);
 
+  // Función para iniciar sesión
   const signin = async (data: SigninData): Promise<{ success: boolean }> => {
-    setErrors(null); // Limpiar errores previos
+    setErrors(null);
     try {
       const res = await axios.get<User[]>("/users");
       const userFound = res.data.find(
@@ -59,60 +65,33 @@ export function AuthProvider({ children }: AuthProviderProps) {
       setIsAuth(true);
       localStorage.setItem("user", JSON.stringify(userFound));
       return { success: true };
-    } catch (error: any) {
-      setErrors([error.response?.data?.message || "Error al iniciar sesión"]);
+    } catch (error) {
+      setErrors(["Error al iniciar sesión"]);
       return { success: false };
     }
   };
 
-  const signout = (): void => {
+  // Función para registrar un usuario nuevo
+  const signup = async (data: SignupData): Promise<void> => {
+    setErrors(null);
+    try {
+      await axios.post("/users", data);
+    } catch (error) {
+      setErrors(["Error al registrarse"]);
+    }
+  };
+
+  // Función para cerrar sesión
+  const logout = () => {
     setUser(null);
     setIsAuth(false);
     localStorage.removeItem("user");
   };
 
-  const signup = async (data: SignupData): Promise<{ success: boolean }> => {
-    setErrors(null);
-    try {
-      const res = await axios.get<User[]>("/users");
-
-      const userExists = res.data.find(
-        (user) =>
-          user.nickName.trim().toLowerCase() ===
-            data.nickName.trim().toLowerCase() ||
-          user.email.trim().toLowerCase() === data.email.trim().toLowerCase()
-      );
-
-      if (userExists) {
-        setErrors(["Ya existe un usuario con ese nombre o email"]);
-        return { success: false };
-      }
-
-      const createRes = await axios.post<User>("/users", data);
-
-      setUser(createRes.data);
-      setIsAuth(true);
-      localStorage.setItem("user", JSON.stringify(createRes.data));
-      return { success: true };
-    } catch (error: any) {
-      setErrors([
-        error.response?.data?.message || "Error al registrar el usuario",
-      ]);
-      return { success: false };
-    }
-  };
-
+  // Valores que se comparten en todo el proyecto
   return (
     <AuthContext.Provider
-      value={{
-        user,
-        isAuth,
-        errorsContext,
-        signin,
-        signout,
-        signup,
-        loading,
-      }}
+      value={{ user, isAuth, signin, signup, logout, errorsContext, loading }}
     >
       {children}
     </AuthContext.Provider>
