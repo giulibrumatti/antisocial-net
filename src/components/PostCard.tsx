@@ -1,19 +1,44 @@
-import React from "react";
+// import React from "react";
 import type { Post } from "../types/Post";
 import { Link } from "react-router-dom";
 
-interface Props {
-  post: Post;
-}
+export const PostCard = ({ post }: { post: Post }) => (
+  <div className="card mb-3 border-0 border-bottom">
+    <div className="card-body d-flex">
+      <img
+        src={post.avatarUrl}
+        alt={post.username}
+        className="rounded-circle me-3"
+        width={48}
+        height={48}
+      />
+      <div>
+        <div className="d-flex justify-content-between align-items-center">
+          <div>
+            <strong>{post.username}</strong>{" "}
+            <span className="text-muted">{post.handle}</span>
+          </div>
+          <Link to={`/post/${post.id}`} className="btn btn-sm btn-outline-dark">
+            Ver más
+          </Link>
+        </div>
 
-export const PostCard: React.FC<Props> = ({ post }) => (
-  <div className="card h-100">
-    <div className="card-body">
-      <h5 className="card-title">{post.title}</h5>
-      <p className="card-text">{post.body}</p>
-      <Link to={`/post/${post.id}`} className="btn btn-primary">
-        Ver más
-      </Link>
+        <p className="mt-2 mb-2">{post.content}</p>
+
+        {post.imageUrl && (
+          <img
+            src={post.imageUrl}
+            alt="Contenido del post"
+            className="img-fluid rounded mb-2"
+          />
+        )}
+
+        <div className="text-muted small">
+        
+          <span>🏷️ {post.tags.join(", ")}</span>
+        </div>
+      </div>
     </div>
   </div>
 );
+

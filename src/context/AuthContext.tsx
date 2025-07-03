@@ -26,6 +26,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const [errorsContext, setErrors] = useState<string[] | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -33,14 +34,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
       setUser(JSON.parse(storedUser));
       setIsAuth(true);
     }
+    setLoading(false);
   }, []);
 
   const signin = async (data: SigninData): Promise<{ success: boolean }> => {
     setErrors(null); // Limpiar errores previos
     try {
-      // NOTA: Este enfoque de obtener todos los usuarios y verificar la contraseña
-      // en el cliente NO ES SEGURO ni escalable en una aplicación real.
-      // Lo ideal es tener un endpoint de login en el backend que verifique las credenciales.
       const res = await axios.get<User[]>("/users");
       const userFound = res.data.find(
         (user) => user.nickName === data.nickName
@@ -51,9 +50,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
         return { success: false };
       }
 
-      // 👉 CORRECCIÓN: Verificar si la contraseña ingresada es la contraseña por defecto "123456"
-      // Esto asume que la API siempre asigna "123456" como contraseña por defecto
-      // y que no devuelve la contraseña real del usuario en la respuesta de /users.
       if (data.password !== "123456") {
         setErrors(["Contraseña incorrecta"]);
         return { success: false };
@@ -76,10 +72,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
   };
 
   const signup = async (data: SignupData): Promise<{ success: boolean }> => {
-    setErrors(null); // Limpiar errores previos
+    setErrors(null);
     try {
-      // NOTA: Similar al login, este enfoque de verificar la existencia de usuario
-      // en el cliente NO ES SEGURO ni escalable.
       const res = await axios.get<User[]>("/users");
 
       const userExists = res.data.find(
@@ -94,7 +88,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
         return { success: false };
       }
 
-      // 👉 `data` ahora incluye `nickName`, `email` Y `password`
       const createRes = await axios.post<User>("/users", data);
 
       setUser(createRes.data);
@@ -118,6 +111,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         signin,
         signout,
         signup,
+        loading,
       }}
     >
       {children}

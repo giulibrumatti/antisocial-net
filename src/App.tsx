@@ -1,4 +1,4 @@
-import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/css/bootstrap.min.css"; 
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Login from "./pages/Login";
@@ -10,7 +10,8 @@ import Acerca from "./pages/Acerca";
 import Profile from "./pages/Profile/Profile";
 import { Home } from "./pages/Home";
 
-import {PostDetails} from "./components/PostDetails";
+import { PostDetails } from "./components/PostDetails";
+import Postear from "./components/Postear";
 
 import Register from "./pages/Register";
 import { ProtectedRoute } from "./components/ProtectedRoute";
@@ -21,8 +22,6 @@ function App() {
   const { isAuth } = useAuth();
   return (
     <PostProvider>
-      {" "}
-      {/* ← Envolver toda la app con PostProvider */}
       <div className="d-flex">
         <Navbar />
         <main className="flex-grow-1 p-4 bg-secondary-subtle">
@@ -42,12 +41,18 @@ function App() {
               }
             />
             <Route path="/register" element={<Register />} />
-        <Route path="/post/:id" element={<PostDetails />} />
+            <Route path="/post/:id" element={<PostDetails />} />
+            <Route
+              path="/postear"
+              element={
+                <ProtectedRoute redirectTo="/login" isAllowed={isAuth}>
+                  <Postear />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
         </main>
       </div>
-          
-
       <Footer />
     </PostProvider>
   );
