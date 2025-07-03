@@ -45,6 +45,7 @@ export interface Post {
   likes?: number;
   createdAt: string;
   updatedAt?: string;
+  tags?: string;
 }
 
 // Like (opcional si no se usa en el TP)

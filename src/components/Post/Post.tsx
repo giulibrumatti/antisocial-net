@@ -1,13 +1,21 @@
 import Card from "react-bootstrap/Card";
 import { Button } from "react-bootstrap";
 import type { Post as PostType } from "../../types/Post";
-import Comments from "./Comments"; // <- Importante
+import Comments from "./Comments";
+import { useState } from "react";
+import { Heart, HeartFill } from "react-bootstrap-icons";
 
 interface PostProps {
   post: PostType;
 }
 
 const Post = ({ post }: PostProps) => {
+  const [liked, setLiked] = useState(false);
+
+  const toggleLike = () => {
+    setLiked(!liked);
+  };
+
   return (
     <div className="container">
       <Card className="w-100 mb-3">
@@ -17,13 +25,21 @@ const Post = ({ post }: PostProps) => {
         </Card.Body>
         <Card.Body className="d-flex justify-content-between">
           <Button
-            className="rounded-pill d-flex align-items-center justify-content-around"
-            variant="primary"
+            variant={liked ? "dark" : "light"}
+            onClick={toggleLike}
+            className="d-flex align-items-center justify-content-center rounded-circle p-2"
+            style={{ width: "40px", height: "40px" }}
           >
-            👍 Like
+            {liked ? (
+              <HeartFill color="white" size={20} />
+            ) : (
+              <Heart color="black" size={20} />
+            )}
           </Button>
         </Card.Body>
-        <Comments postId={post.id} comments={post.comments || []} />
+        <Card.Body className="d-flex justify-content-between">
+          <Comments postId={post.id} comments={post.comments || []} />
+        </Card.Body>
       </Card>
     </div>
   );

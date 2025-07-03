@@ -2,37 +2,45 @@ import { Link } from "react-router-dom";
 import type { Post } from "../../types/Post";
 
 interface Props {
-  post: Post;
+  posts: Post[];
 }
 
-const PostCard = ({ post }: Props) => {
-  return (
-    <div className="card mb-3 border border-dark-subtle shadow-sm">
-      <div className="card-body">
-        <h5 className="card-title">{post.description}</h5>
+export const PostCard = ({ post }: { post: Post }) => (
+  <div className="card mb-3 border-0 border-bottom">
+    <div className="card-body d-flex">
+      <img
+        src={post.imageUrl}
+        alt={post.User.nickName}
+        className="rounded-circle me-3"
+        width={48}
+        height={48}
+      />
+      <div>
+        <div className="d-flex justify-content-between align-items-center">
+          <div>
+            <strong>{post.User.nickName}</strong>{" "}
+            <span className="text-muted">{post.tags}</span>
+          </div>
+          <Link to={`/post/${post.id}`} className="btn btn-sm btn-outline-dark">
+            Ver más
+          </Link>
+        </div>
 
-        {/* Etiquetas */}
-        {post.tags && post.tags.length > 0 && (
-          <p className="card-text">
-            <strong>Etiquetas:</strong>{" "}
-            {post.tags.map((tag) => tag.name).join(", ")}
-          </p>
+        <p className="mt-2 mb-2">{post.description}</p>
+
+        {post.imageUrl && (
+          <img
+            src={post.imageUrl}
+            alt="Contenido del post"
+            className="img-fluid rounded mb-2"
+          />
         )}
 
-        {/* Comentarios */}
-        {post.comments && (
-          <p className="card-text">
-            💬 {post.comments.length} comentario{post.comments.length !== 1 ? "s" : ""}
-          </p>
-        )}
-
-        {/* Botón Ver más */}
-        <Link to={`/post/${post.id}`} className="btn btn-outline-primary btn-sm">
-          Ver más
-        </Link>
+        <div className="text-muted small">
+        
+          
+        </div>
       </div>
     </div>
-  );
-};
-
-export default PostCard;
+  </div>
+);
