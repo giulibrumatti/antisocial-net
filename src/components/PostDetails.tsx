@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+/*import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import type { Post} from "../types/Post.ts";
 import type { Comment } from "../types/Comment.ts"
@@ -108,3 +108,4 @@ export const PostDetails = () => {
   );
 };
 
+*/

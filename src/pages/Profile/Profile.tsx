@@ -4,7 +4,7 @@ import portada from "../../assets/portada.jpg";
 import { useAuth } from "../../context/AuthContext";
 import { usePost } from "../../context/PostContextDef";
 import { useEffect } from "react";
-import Post from "../../components/Post/Post"; // Importa el componente Post si lo usás
+import Post from "../../components/Post/Post"; 
 import "./profile.css";
 
 const Profile = () => {
@@ -20,7 +20,6 @@ const Profile = () => {
 
   return (
     <div className="container mx-2 border border-dark-subtle rounded-3 p-0 m-0 w-75">
-      {/* Portada y foto */}
       <div className="p-0 m-0 container-fluid position-relative">
         <img
           className="w-100 portadaUser"
@@ -34,7 +33,6 @@ const Profile = () => {
         />
       </div>
 
-      {/* Info del usuario */}
       <div className="container-fluid d-flex align-items-center justify-content-between p-2">
         <div>
           <h5>{user?.nickName}</h5>
@@ -44,8 +42,6 @@ const Profile = () => {
           Editar Perfil
         </Button>
       </div>
-
-      {/* Localización y fecha */}
       <div className="container d-flex flex-row align-items-start justify-content-around px-3">
         <div className="d-flex flex-row align-items-start justify-content-between">
           <svg
@@ -74,8 +70,6 @@ const Profile = () => {
           <p>Fecha de creación: {date}</p>
         </div>
       </div>
-
-      {/* Publicaciones del usuario */}
       <Tabs defaultActiveKey="Post" id="uncontrolled-tab" className="mb-3">
         <Tab eventKey="Post" title="Posts">
           {userPosts.length > 0 ? (
@@ -85,7 +79,6 @@ const Profile = () => {
           )}
         </Tab>
         <Tab eventKey="Comentarios" title="Comentarios">
-          {/* Aquí podés poner los comentarios u otro contenido */}
           <p>Aún no hay comentarios.</p>
         </Tab>
       </Tabs>

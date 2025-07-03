@@ -34,7 +34,6 @@ export interface Post {
   updatedAt?: string;
 }
 
-// Tipos adicionales para las interacciones
 export interface Like {
   id: number;
   userId: number;

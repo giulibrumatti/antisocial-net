@@ -1,4 +1,4 @@
-import "bootstrap/dist/css/bootstrap.min.css"; 
+import "bootstrap/dist/css/bootstrap.min.css";
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Login from "./pages/Login";
@@ -9,14 +9,11 @@ import Ayuda from "./pages/Ayuda";
 import Acerca from "./pages/Acerca";
 import Profile from "./pages/Profile/Profile";
 import { Home } from "./pages/Home";
-
-import { PostDetails } from "./components/PostDetails";
 import Postear from "./components/Postear";
-
 import Register from "./pages/Register";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { useAuth } from "./context/AuthContext";
-import { PostProvider } from "./context/PostContext"; // ← Importar PostProvider
+import { PostProvider } from "./context/PostContext";
 
 function App() {
   const { isAuth } = useAuth();
@@ -41,7 +38,7 @@ function App() {
               }
             />
             <Route path="/register" element={<Register />} />
-            <Route path="/post/:id" element={<PostDetails />} />
+            {/*<Route path="/post/:id" element={<PostDetails />} />**/}
             <Route
               path="/postear"
               element={

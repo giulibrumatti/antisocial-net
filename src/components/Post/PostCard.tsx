@@ -1,3 +1,4 @@
+/*
 // import React from "react";
 import type { Post } from "../types/Post";
 import { Link } from "react-router-dom";
@@ -41,4 +42,4 @@ export const PostCard = ({ post }: { post: Post }) => (
     </div>
   </div>
 );
-
+*/

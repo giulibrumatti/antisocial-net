@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Post from "../components/Post/Post.tsx"
 import { Banner } from "../components/Banner";
 import { AboutUs } from "../components/AboutUs";
-import { Highlight } from "../components/Highlight";
 import { usePost } from "../context/PostContextDef";
 
 
@@ -22,7 +21,6 @@ export const Home = () => {
   return (
     <div className="container py-4">
       <Banner />
-      <Highlight />
       {loading ? (
         <div className="alert alert-info">Cargando publicaciones...</div>
       ) : (
