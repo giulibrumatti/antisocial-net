@@ -1,0 +1,51 @@
+/* Estilos generales para la red social tipo Twitter */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Roboto, system-ui, sans-serif;
+  background-color: #e6ecf0; /* fondo gris claro tipo Twitter */
+  color: #14171a; /* texto base oscuro */
+}
+
+/* enlaces sin subrayado */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* enlaces con hover azul tipo Twitter */
+a:hover {
+  color: #1da1f2;
+}
+
+/* títulos (como nombre de usuario o título de post) */
+h1, h2, h3, h4, h5 {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+/* container con ancho limitado como Twitter */
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* imagen de portada */
+.portada {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+/* botones tipo Twitter */
+.btn-primary {
+  background-color: #1da1f2;
+  border-color: #1da1f2;
+}
+
+.btn-primary:hover {
+  background-color: #0d8ddb;
+  border-color: #0d8ddb;
+}
