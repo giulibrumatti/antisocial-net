@@ -23,7 +23,7 @@ const Comments = ({ postId, comments }: CommentsProps) => {
     if (!user || newComment.trim() === "") return;
     await addComment(postId, newComment);
     setNewComment("");
-    setShowComments(true); 
+    setShowComments(true);
   };
 
   const handleEditComment = async (commentId: number) => {
@@ -34,7 +34,9 @@ const Comments = ({ postId, comments }: CommentsProps) => {
   };
 
   const handleDeleteComment = async (commentId: number) => {
-    if (window.confirm("¿Estás seguro de que quieres eliminar este comentario?")) {
+    if (
+      window.confirm("¿Estás seguro de que quieres eliminar este comentario?")
+    ) {
       await deleteComment(postId, commentId);
     }
   };
@@ -61,7 +63,6 @@ const Comments = ({ postId, comments }: CommentsProps) => {
 
       {(showComments || showForm) && (
         <>
-          <h6>Comentarios:</h6>
           {comments.length > 0 && showComments ? (
             comments.map((comment) => (
               <div key={comment.id} className="mb-2 border-bottom pb-2">

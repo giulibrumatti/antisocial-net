@@ -1,14 +1,16 @@
-/*
-// import React from "react";
-import type { Post } from "../types/Post";
 import { Link } from "react-router-dom";
+import type { Post } from "../../types/Post";
+
+interface Props {
+  posts: Post[];
+}
 
 export const PostCard = ({ post }: { post: Post }) => (
   <div className="card mb-3 border-0 border-bottom">
     <div className="card-body d-flex">
       <img
-        src={post.avatarUrl}
-        alt={post.username}
+        src={post.imageUrl}
+        alt={post.User.nickName}
         className="rounded-circle me-3"
         width={48}
         height={48}
@@ -16,15 +18,15 @@ export const PostCard = ({ post }: { post: Post }) => (
       <div>
         <div className="d-flex justify-content-between align-items-center">
           <div>
-            <strong>{post.username}</strong>{" "}
-            <span className="text-muted">{post.handle}</span>
+            <strong>{post.User.nickName}</strong>{" "}
+            <span className="text-muted">{post.tags}</span>
           </div>
           <Link to={`/post/${post.id}`} className="btn btn-sm btn-outline-dark">
             Ver más
           </Link>
         </div>
 
-        <p className="mt-2 mb-2">{post.content}</p>
+        <p className="mt-2 mb-2">{post.description}</p>
 
         {post.imageUrl && (
           <img
@@ -36,10 +38,9 @@ export const PostCard = ({ post }: { post: Post }) => (
 
         <div className="text-muted small">
         
-          <span>🏷️ {post.tags.join(", ")}</span>
+          
         </div>
       </div>
     </div>
   </div>
 );
-*/

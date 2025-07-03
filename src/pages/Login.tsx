@@ -41,7 +41,8 @@ const Login = () => {
         </div>
 
         <div className="mb-3">
-          <label className="form-label">Contraseña</label>
+          <label className="form-label">Contraseña: </label>
+          <span>"123456"</span>
           <input
             type="password"
             className="form-control"

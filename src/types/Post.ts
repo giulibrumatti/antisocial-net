@@ -32,6 +32,7 @@ export interface Post {
   likes?: number;
   createdAt: string;
   updatedAt?: string;
+  tags?: string;
 }
 
 export interface Like {

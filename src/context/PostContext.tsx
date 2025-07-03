@@ -140,4 +140,3 @@ const addComment = async (postId: number, content: string) => {
   );
 };
 
-// usePost hook moved to a separate file (usePost.ts)
