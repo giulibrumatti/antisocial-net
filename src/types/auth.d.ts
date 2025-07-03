@@ -22,10 +22,11 @@ export interface SignupData {
 export interface AuthContextType {
   user: User | null;
   isAuth: boolean;
+  loading: boolean; // ← ✅ NUEVA propiedad
   errorsContext: string[] | null;
   signin: (data: SigninData) => Promise<{ success: boolean }>;
-  signup: (data: SignupData) => Promise<{ success: boolean }>;
   signout: () => void;
+  signup: (data: SignupData) => Promise<{ success: boolean }>;
 }
 
 export interface ProtectedRouteProps {

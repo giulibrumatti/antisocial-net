@@ -4,6 +4,8 @@ import { useAuth } from "../../context/AuthContext";
 import { privateRoutes, publicRoutes } from "./navegation.ts";
 
 const Navbar = () => {
+  const { isAuth } = useAuth();
+
   return (
     <aside
       className="bg-dark text-white p-3 d-flex flex-column"
@@ -16,9 +18,13 @@ const Navbar = () => {
         AntiSocial Net
       </Link>
       <NavList />
-      <Button className="rounded-pill w-100 mt-auto" variant="light">
-        Postear
-      </Button>
+      {isAuth && (
+        <Link to="/postear" className="mt-auto">
+          <Button className="rounded-pill w-100" variant="light">
+            Postear
+          </Button>
+        </Link>
+      )}
     </aside>
   );
 };
@@ -47,10 +53,7 @@ function NavList() {
             <Button
               onClick={() => signout()}
               className="nav-link text-white fw-medium"
-              style={{
-                backgroundColor: "transparent",
-                boxShadow: "none",
-              }}
+              style={{ backgroundColor: "transparent", boxShadow: "none" }}
             >
               Cerrar Sesión
             </Button>
