@@ -30,7 +30,6 @@ Permite que las personas usuarias puedan registrarse, iniciar sesión, navegar p
 - 👤 **Registro de nuevos usuarios** (verifica nickname)
 - 🏠 **Página de inicio (Home)** con feed de publicaciones:
   - Descripción
-  - Imágenes
   - Etiquetas
   - Contador de comentarios
   - Botón “Ver más”
