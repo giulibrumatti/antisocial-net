@@ -8,13 +8,19 @@ Permite que las personas usuarias puedan registrarse, iniciar sesión, navegar p
 
 ## 🚀 Tecnologías Utilizadas
 
-- ✅ React con TypeScript
-- ✅ React Router DOM para navegación
-- ✅ Context API para manejo de sesión
-- ✅ Axios para llamadas a la API
-- ✅ Bootstrap para el diseño responsive
-- ✅ Vite como entorno de desarrollo
-- ✅ localStorage para persistencia de sesión
+✅ React + TypeScript: Desarrollo de componentes tipados, brindando robustez y escalabilidad al código.
+
+✅ React Router DOM: Gestión eficiente de rutas y navegación entre vistas de manera dinámica.
+
+✅ Context API: Manejo centralizado del estado de sesión y autenticación del usuario.
+
+✅ Axios: Cliente HTTP para realizar peticiones a la API de forma sencilla y con manejo de promesas.
+
+✅ Bootstrap: Estilos y diseño responsive predefinido para una interfaz moderna y adaptable.
+
+✅ Vite: Herramienta de desarrollo ultrarrápida con recarga en caliente y configuración optimizada.
+
+✅ localStorage: Persistencia de la sesión del usuario incluso tras recargar la página o cerrar el navegador.
 
 ---
 
